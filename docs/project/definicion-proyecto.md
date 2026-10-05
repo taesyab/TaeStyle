@@ -38,9 +38,9 @@ Los elementos B01–B17 del diseño serán las tareas principales. Las historias
 
 ## Decisiones aprobadas y pendientes
 
-Aprobadas: alcance MVP del diseño, arquitectura por capas y .NET 10 LTS. GitHub será el servicio de control de versiones solicitado.
+Aprobadas: alcance MVP del diseño, arquitectura por capas, .NET 10 LTS y GitHub. El 5 de octubre de 2026 se confirmó Ecuador, moneda USD y Android primero, con estructura preparada para iOS. También se aprobaron precio y compra opcionales, máximo un uso por prenda al día, referencia de olvido desde último uso o incorporación si no hay usos, y archivo que conserva historial y excluye de métricas activas.
 
-Pendientes: verificar visibilidad del repositorio; moneda y país del piloto; Android primero o Android/iOS; reglas propuestas sobre fechas, precio desconocido y archivo; alojamiento y correo. La preparación documental puede avanzar mientras se resuelven; la implementación de funcionalidades dependientes debe respetar sus respuestas.
+Pendientes: verificar visibilidad del repositorio, alojamiento y correo. El proveedor de correo se seleccionará antes de B05 y el alojamiento antes del despliegue; estas decisiones no requieren cambiar el alcance aprobado. Los contratos y recorridos del primer incremento están en [primer incremento](primer-incremento.md), y la validación con usuarias continúa pendiente.
 
 ## Información y acceso
 

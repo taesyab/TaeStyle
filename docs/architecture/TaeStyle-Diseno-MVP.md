@@ -1,6 +1,6 @@
 # TaeStyle — Diseño funcional y técnico del MVP
 
-Versión 1.1 · 29 de septiembre de 2026 · Propuesta para revisión; .NET 10 LTS aprobado
+Versión 1.2 · 5 de octubre de 2026 · .NET 10 LTS y alcance del piloto aprobados; revisión de experiencia pendiente
 
 Este documento reúne los ocho entregables de diseño. No contiene implementación, scripts SQL ni migraciones ejecutables. Las estructuras de carpetas y los diagramas son especificaciones del trabajo posterior. Las decisiones propuestas quedan identificadas para validarlas antes de implementar.
 
@@ -20,12 +20,14 @@ Público principal: mujeres de 25 a 55 años con muchas prendas, compras frecuen
 
 Indicadores de producto propuestos: proporción de cuentas que registran su primera prenda, tiempo hasta esa primera prenda, usuarios que registran usos semanalmente y prendas olvidadas que vuelven a usarse. No se afirmará ahorro financiero real a partir de estas métricas.
 
-### 1.2 Decisiones funcionales propuestas
+### 1.2 Decisiones funcionales
+
+El 5 de octubre de 2026 se confirmó el piloto en Ecuador con USD y Android primero. Se aprobaron precio y fecha de compra opcionales, máximo un uso diario por prenda, olvido desde último uso o incorporación cuando no hay usos, y archivo con conservación del historial y exclusión de métricas activas. Las demás especificaciones siguen como propuestas técnicas del diseño.
 
 | Tema | Decisión para el MVP |
 |---|---|
 | Closet | Un closet implícito por usuario; no se necesita entidad Closet todavía. |
-| Moneda | Una moneda por cuenta, elegida al inicio. No hay conversión. No se permite cambiarla si existen prendas con precio sin definir antes una migración. |
+| Moneda | USD para todas las cuentas del piloto en Ecuador. Se conserva el campo moneda por cuenta para evolución futura; no hay conversión ni cambio de moneda en el MVP. |
 | Zona horaria | Zona IANA por usuario; fechas de uso y compra son fechas de calendario. Auditoría y expiraciones se guardan en UTC. |
 | Conservación | Excelente, Bueno o Regular; determina la regla de reventa. |
 | Situación | Activa o Archivada. Una prenda archivada permanece consultable, pero no forma parte del closet activo. |
@@ -166,7 +168,7 @@ Navegación principal: **Inicio · Mi closet · Olvidadas · Cuenta**. Agregar p
 | Pantalla | Contenido y acción principal |
 |---|---|
 | Bienvenida y acceso | Beneficio central, registro, login y recuperación claramente accesible. |
-| Preferencias iniciales | Moneda y zona horaria sugerida; explicación breve de cómo se usan. |
+| Preferencias iniciales | Mostrar USD como moneda del piloto y confirmar zona horaria sugerida; explicación breve de cómo se usan. |
 | Inicio | Prendas activas, inversión registrada, cobertura de precios, prendas sin uso y acceso a valor por categoría. |
 | Mi closet | Cuadrícula con fotos, búsqueda, filtros, orden y botón Agregar. |
 | Agregar/editar | Foto, nombre, categoría, color, conservación; marca, precio y fecha opcionales. Guardado explícito. |
@@ -174,7 +176,7 @@ Navegación principal: **Inicio · Mi closet · Olvidadas · Cuenta**. Agregar p
 | Olvidadas | Grupos de 90/180/365 días, razón de clasificación y acceso al detalle. |
 | Cuenta | Preferencias, privacidad y cierre de sesión. |
 
-Flujo principal: Registro → elegir moneda → agregar primera prenda → ver detalle → «Usé esta prenda» → ver costo por uso actualizado. El formulario conserva lo escrito si falla la red. Tras marcar un uso se ofrece Deshacer. Si ya existe un uso hoy, el botón muestra «Registrada hoy».
+Flujo principal: Registro → confirmar preferencias con USD → agregar primera prenda → ver detalle → «Usé esta prenda» → ver costo por uso actualizado. El formulario conserva lo escrito si falla la red. Tras marcar un uso se ofrece Deshacer. Si ya existe un uso hoy, el botón muestra «Registrada hoy».
 
 No hay funcionamiento offline con sincronización: las mutaciones requieren conexión y muestran estado de envío. Evitar duplicarlas al reintentar. Distinguir carga, closet vacío, búsqueda sin resultados, error de conexión y sesión vencida. Al expirar sesión se preserva el formulario en memoria cuando sea posible, sin guardar credenciales.
 
@@ -584,7 +586,7 @@ mobile/tae_style/
 
 Data contiene DTOs, clientes remotos y adaptadores; Domain, modelos e interfaces independientes de widgets; Presentation, pantallas y estado. Reventa se presenta dentro de detalle y métricas para evitar crear una sección comercial inexistente.
 
-Objetivo de plataforma propuesto: Android primero, con proyecto compatible con iOS. La validación y distribución en iOS requieren infraestructura macOS y credenciales de firma; decidir si forman parte del lanzamiento inicial. No se da por validado iOS a partir de pruebas en Android.
+Objetivo de plataforma aprobado: Android primero, con estructura preparada para iOS. La validación y distribución en iOS se dejan para una fase posterior y requieren infraestructura macOS y credenciales de firma. No se da por validado iOS a partir de pruebas en Android.
 
 ## 8. Roadmap por sprints
 
@@ -608,12 +610,12 @@ Duración orientativa: 14 semanas incluyendo diseño; ajustar según capacidad y
 
 Se usará .NET 10 LTS con ASP.NET Core 10, EF Core 10 y Npgsql compatible desde el primer incremento. Esta aprobación no inicia la implementación; continúa la revisión funcional y técnica.
 
-### Decisiones que deben cerrarse antes de implementar
+### Decisiones funcionales cerradas
 
-1. Moneda inicial admitida —propuesta USD para un piloto en Ecuador— y alcance geográfico real.
-2. Android primero o lanzamiento simultáneo Android/iOS.
-3. Confirmar las reglas propuestas: precio/fecha opcionales, un uso diario y fecha de incorporación como referencia cuando no hay usos.
-4. Confirmar archivo separado de conservación y métricas limitadas al closet activo.
-5. Seleccionar alojamiento, almacenamiento y correo, con presupuesto operativo; Docker no elimina esos costos.
+1. Piloto en Ecuador con USD.
+2. Android primero; iOS posterior.
+3. Precio y fecha de compra opcionales; máximo un uso por prenda al día.
+4. Olvido desde el último uso registrado o desde la incorporación si nunca se registró uso.
+5. Archivo separado de conservación, con historial preservado y métricas limitadas al closet activo.
 
-Con estas decisiones cerradas, la siguiente etapa será fijar el modelo físico y los contratos detallados, y después iniciar el primer incremento de implementación. No se ha generado código de producto, SQL ni migraciones en esta entrega.
+Queda seleccionar alojamiento, almacenamiento y correo antes de los incrementos que dependan de ellos, y validar el prototipo con usuarias. Los contratos y recorridos del primer incremento están en [Primer incremento](../project/primer-incremento.md) y [Autenticación](../api/autenticacion.md). No se ha generado código de producto, SQL ni migraciones en esta entrega.

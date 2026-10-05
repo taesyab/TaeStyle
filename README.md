@@ -4,7 +4,7 @@ Aplicación móvil para aprovechar mejor la ropa, entender la inversión en el c
 
 ## Estado del proyecto
 
-Fase de definición y preparación del repositorio. Arquitectura definida y .NET 10 LTS aprobado. Todavía no existe una aplicación ejecutable ni un despliegue. Las decisiones funcionales pendientes están en el documento de diseño.
+Fase de definición y preparación del repositorio. Arquitectura definida y .NET 10 LTS aprobado. Piloto confirmado en Ecuador, con USD y Android primero; las reglas de uso, archivo y prendas olvidadas están aprobadas. Todavía no existe una aplicación ejecutable ni un despliegue. El primer incremento está especificado para preparar su implementación.
 
 ## Stack aprobado
 
@@ -28,6 +28,8 @@ Marketplace, comunidad, probador virtual, IA estilista, tiendas, clima, calendar
 - [Diseño funcional y técnico](docs/architecture/TaeStyle-Diseno-MVP.md).
 - [Definición del proyecto y organización en GitHub](docs/project/definicion-proyecto.md).
 - [Backlog de preparación](docs/project/backlog-inicial.md).
+- [Primer incremento y preparación del entorno](docs/project/primer-incremento.md).
+- [Contratos de autenticación](docs/api/autenticacion.md).
 - [Guía de contribución](CONTRIBUTING.md).
 
 ## Organización prevista
