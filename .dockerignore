@@ -1,0 +1,7 @@
+.git
+**/bin
+**/obj
+**/build
+**/.dart_tool
+**/.env*
+mobile

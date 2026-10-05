@@ -4,7 +4,7 @@ Aplicación móvil para aprovechar mejor la ropa, entender la inversión en el c
 
 ## Estado del proyecto
 
-Fase de definición y preparación del repositorio. Arquitectura definida y .NET 10 LTS aprobado. Piloto confirmado en Ecuador, con USD y Android primero; las reglas de uso, archivo y prendas olvidadas están aprobadas. Todavía no existe una aplicación ejecutable ni un despliegue. El primer incremento está especificado para preparar su implementación.
+Primer incremento en implementación: API .NET 10 de registro y sesiones, migración PostgreSQL y app Flutter con acceso y closet vacío. Piloto confirmado en Ecuador, con USD y Android primero. No hay despliegue público ni gestión de prendas todavía.
 
 ## Stack aprobado
 
@@ -30,6 +30,7 @@ Marketplace, comunidad, probador virtual, IA estilista, tiendas, clima, calendar
 - [Backlog de preparación](docs/project/backlog-inicial.md).
 - [Primer incremento y preparación del entorno](docs/project/primer-incremento.md).
 - [Contratos de autenticación](docs/api/autenticacion.md).
+- [Ejecutar y verificar el primer incremento](docs/project/ejecucion-local.md).
 - [Guía de contribución](CONTRIBUTING.md).
 
 ## Organización prevista
@@ -40,11 +41,11 @@ Un solo repositorio contiene backend, móvil y documentación para mantener alin
 |---|---|---|
 | docs/ | Arquitectura, decisiones y planificación | Preparado |
 | .github/ | Plantillas de tareas y pull requests | Preparado |
-| backend/ | Solución .NET, cuatro capas y pruebas | Se creará al implementar |
-| mobile/tae_style/ | Proyecto Flutter | Se creará al implementar |
-| deploy/ | Docker y configuración de entornos | Se creará al implementar |
+| backend/ | Solución .NET, cuatro capas y pruebas | Implementación inicial |
+| mobile/tae_style/ | Proyecto Flutter | Acceso y closet vacío |
+| deploy/ | Docker, Compose y script PostgreSQL | Preparado para desarrollo |
 
-No se incluyen comandos de ejecución hasta que existan proyectos y dependencias verificadas.
+Los comandos de ejecución y requisitos están en la guía enlazada. La recuperación de contraseña, gestión de prendas e informes se implementarán en los siguientes incrementos; no se debe publicar esta base como un MVP completo.
 
 ## Repositorio remoto
 

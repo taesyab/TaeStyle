@@ -48,3 +48,6 @@ Thumbs.db
 uploads/
 backups/
 .codex/
+.local-db/
+.tooling/
+.dotnet-local/
