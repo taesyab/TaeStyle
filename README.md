@@ -4,7 +4,7 @@ Aplicación móvil para aprovechar mejor la ropa, entender la inversión en el c
 
 ## Estado del proyecto
 
-Fase de definición y preparación del repositorio. Arquitectura definida y .NET 10 LTS aprobado. Todavía no existe una aplicación ejecutable ni un despliegue. Las decisiones funcionales pendientes están en el documento de diseño.
+API .NET 10 de registro y sesiones, migraciones PostgreSQL y app Flutter con acceso, alta de prendas con foto privada, listado y detalle. Piloto confirmado en Ecuador, con USD y Android primero. No hay despliegue público; edición, archivo, eliminación, usos y métricas siguen pendientes.
 
 ## Stack aprobado
 
@@ -28,6 +28,10 @@ Marketplace, comunidad, probador virtual, IA estilista, tiendas, clima, calendar
 - [Diseño funcional y técnico](docs/architecture/TaeStyle-Diseno-MVP.md).
 - [Definición del proyecto y organización en GitHub](docs/project/definicion-proyecto.md).
 - [Backlog de preparación](docs/project/backlog-inicial.md).
+- [Primer incremento y preparación del entorno](docs/project/primer-incremento.md).
+- [Contratos de autenticación](docs/api/autenticacion.md).
+- [Alta de prendas: contratos, almacenamiento y actualización](docs/project/alta-prendas.md).
+- [Ejecutar y verificar el primer incremento](docs/project/ejecucion-local.md).
 - [Guía de contribución](CONTRIBUTING.md).
 
 ## Organización prevista
@@ -38,11 +42,11 @@ Un solo repositorio contiene backend, móvil y documentación para mantener alin
 |---|---|---|
 | docs/ | Arquitectura, decisiones y planificación | Preparado |
 | .github/ | Plantillas de tareas y pull requests | Preparado |
-| backend/ | Solución .NET, cuatro capas y pruebas | Se creará al implementar |
-| mobile/tae_style/ | Proyecto Flutter | Se creará al implementar |
-| deploy/ | Docker y configuración de entornos | Se creará al implementar |
+| backend/ | Solución .NET, cuatro capas y pruebas | Implementación inicial |
+| mobile/tae_style/ | Proyecto Flutter | Acceso, alta con foto, listado y detalle |
+| deploy/ | Docker, Compose y script PostgreSQL | Preparado para desarrollo |
 
-No se incluyen comandos de ejecución hasta que existan proyectos y dependencias verificadas.
+Los comandos de ejecución y requisitos están en las guías enlazadas. La recuperación de contraseña, las demás operaciones de prendas e informes se implementarán en los siguientes incrementos; no se debe publicar esta base como un MVP completo.
 
 ## Repositorio remoto
 

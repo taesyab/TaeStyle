@@ -24,6 +24,8 @@ Esta lista es una preparación local, no una lista de issues ya creadas. Las est
 
 ## Primera tarea concreta
 
+Avance de B01 al 5 de octubre de 2026: Ecuador, USD, Android primero y reglas funcionales confirmados. Contratos de autenticación y recorrido inicial documentados. Quedan revisión visual del prototipo y especificaciones detalladas de los siguientes incrementos; B01 todavía no se marca como terminado.
+
 Título: B01 Definir las decisiones de lanzamiento del MVP.
 
 Resultado: confirmar moneda, plataformas móviles y reglas de registro; revisar el prototipo y los contratos; registrar decisiones y fecha. .NET 10 LTS ya está aprobado y no requiere volver a decidirse.
