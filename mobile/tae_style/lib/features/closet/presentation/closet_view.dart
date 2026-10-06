@@ -13,6 +13,7 @@ const categories = [
   'Jean',
   'Vestido',
   'Chaqueta',
+  'Abrigo',
   'Falda',
   'Zapatos',
   'Accesorios',

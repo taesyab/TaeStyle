@@ -23,7 +23,7 @@ public interface IPhotoProcessor { byte[] Process(byte[] content); }
 
 public static class GarmentValidation
 {
-    public static readonly string[] Categories = ["Blusa", "Camisa", "Pantalón", "Jean", "Vestido", "Chaqueta", "Falda", "Zapatos", "Accesorios"];
+    public static readonly string[] Categories = ["Blusa", "Camisa", "Pantalón", "Jean", "Vestido", "Chaqueta", "Abrigo", "Falda", "Zapatos", "Accesorios"];
     public static readonly string[] Conditions = ["Excelente", "Bueno", "Regular"];
     public static CreateGarmentCommand Validate(CreateGarmentCommand c, DateOnly today)
     {

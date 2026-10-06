@@ -8,7 +8,7 @@ Mi closet → Agregar prenda → cámara o galería → completar datos → Guar
 
 Foto, nombre (100 caracteres), categoría, color (40) y conservación son obligatorios. Marca (100), precio USD y fecha de compra son opcionales. Precio desconocido se conserva como NULL, distinto de cero. Se aceptan hasta dos decimales y se rechazan negativos y fechas futuras según la zona de la cuenta. El nuevo registro es activo.
 
-Categorías: Blusa, Camisa, Pantalón, Jean, Vestido, Chaqueta, Falda, Zapatos y Accesorios. Conservación: Excelente, Bueno y Regular. El color admite texto como multicolor u otro. Los catálogos se validan en Application; su administración desde base no forma parte de este incremento.
+Categorías: Blusa, Camisa, Pantalón, Jean, Vestido, Chaqueta, Abrigo, Falda, Zapatos y Accesorios. Conservación: Excelente, Bueno y Regular. El color admite texto como multicolor u otro. Los catálogos se validan en Application; su administración desde base no forma parte de este incremento. Abrigo se agregó por solicitud de la usuaria tras probar el alta; no requiere migración ni reclasifica prendas existentes.
 
 Flutter usa image_picker 1.2.4, publicado por flutter.dev: https://pub.dev/packages/image_picker. Recupera fotos pendientes con retrieveLostData si Android destruye la actividad; los demás campos del formulario solo se conservan mientras la pantalla sigue en memoria. No agrega permisos amplios de almacenamiento. iOS sigue fuera del piloto y requerirá su proyecto y textos de permisos.
 
