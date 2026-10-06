@@ -23,6 +23,11 @@ builder.Services.AddIdentityCore<Account>(o =>
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddScoped<IAccessService, AccessService>();
 builder.Services.AddScoped<RegisterHandler>(); builder.Services.AddScoped<LoginHandler>();
+builder.Services.AddScoped<IGarmentRepository, GarmentRepository>();
+builder.Services.AddSingleton<IPhotoProcessor, PhotoProcessor>();
+builder.Services.AddScoped<CreateGarmentHandler>();
+builder.Services.AddScoped<UploadPhotoHandler>();
+builder.Services.AddHostedService<PhotoCleanup>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
 {
     var jwt = builder.Configuration.GetSection("Jwt").Get<JwtOptions>() ?? new();
@@ -88,5 +93,35 @@ auth.MapPost("/login", async (LoginCommand command, LoginHandler handler, Cancel
 auth.MapPost("/refresh", async (RefreshCommand command, IAccessService service, CancellationToken ct) => Results.Ok(await service.Refresh(command, ct)));
 auth.MapPost("/logout", async (RefreshCommand command, IAccessService service, CancellationToken ct) => { await service.Logout(command, ct); return Results.NoContent(); });
 app.MapGet("/api/v1/me", async (ClaimsPrincipal user, IAccessService service, CancellationToken ct) => Results.Ok(await service.Current(new(Guid.Parse(user.FindFirstValue("sub")!)), ct))).RequireAuthorization();
+var closet = app.MapGroup("/api/v1").RequireAuthorization();
+closet.MapGet("/garments", async (ClaimsPrincipal user, IGarmentRepository repository, CancellationToken ct, int page = 1) =>
+    Results.Ok(await repository.List(Guid.Parse(user.FindFirstValue("sub")!), page, ct)));
+closet.MapGet("/garments/{id:guid}", async (Guid id, ClaimsPrincipal user, IGarmentRepository repository, CancellationToken ct) =>
+    Results.Ok(await repository.Get(Guid.Parse(user.FindFirstValue("sub")!), id, ct)));
+closet.MapPost("/garments", async (CreateGarmentCommand command, ClaimsPrincipal user, CreateGarmentHandler handler, CancellationToken ct) =>
+{
+    var result = await handler.Handle(Guid.Parse(user.FindFirstValue("sub")!), command, ct);
+    return Results.Created($"/api/v1/garments/{result.Id}", result);
+});
+// Raw bytes avoid multipart buffering and keep the upload bounded before decoding.
+closet.MapPost("/garment-photos", async (HttpRequest request, ClaimsPrincipal user, UploadPhotoHandler handler, CancellationToken ct) =>
+{
+    const int limit = 8 * 1024 * 1024;
+    if (request.ContentLength > limit) throw new AppException(413, "photo_too_large", "La foto debe pesar como máximo 8 MB.");
+    using var data = new MemoryStream();
+    var buffer = new byte[81920];
+    int read;
+    while ((read = await request.Body.ReadAsync(buffer, ct)) > 0)
+    {
+        if (data.Length + read > limit) throw new AppException(413, "photo_too_large", "La foto debe pesar como máximo 8 MB.");
+        await data.WriteAsync(buffer.AsMemory(0, read), ct);
+    }
+    return Results.Json(await handler.Handle(Guid.Parse(user.FindFirstValue("sub")!), data.ToArray(), ct), statusCode: 201);
+}).RequireRateLimiting("access");
+closet.MapGet("/garment-photos/{id:guid}", async (Guid id, ClaimsPrincipal user, IGarmentRepository repository, TimeProvider clock, HttpResponse response, CancellationToken ct) =>
+{
+    response.Headers["X-Content-Type-Options"] = "nosniff";
+    return Results.File(await repository.Photo(Guid.Parse(user.FindFirstValue("sub")!), id, clock.GetUtcNow(), ct), "image/jpeg");
+});
 app.Run();
 public partial class Program;

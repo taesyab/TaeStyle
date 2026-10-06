@@ -1,6 +1,6 @@
 # Ejecutar el primer incremento
 
-El incremento implementa cuentas, registro, login, refresh rotatorio, logout y consulta de cuenta. Flutter incluye bienvenida, formularios, closet vacío y cuenta. Todavía no permite agregar prendas ni recuperar contraseña; la recuperación corresponde a B05 y es obligatoria antes de un lanzamiento público.
+El proyecto implementa cuentas, registro, login, refresh rotatorio, logout, consulta de cuenta y alta de prendas con foto privada, listado y detalle. Consulta [alta de prendas](alta-prendas.md) para actualizar una instalación existente. La recuperación de contraseña corresponde a B05 y sigue pendiente; es obligatoria antes de un lanzamiento público.
 
 ## Requisitos
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -195,6 +196,85 @@ class AccessApi {
       return false;
     }
   }
+
+  Future<http.Response> authorizedRequest(
+    String path, {
+    Object? body,
+    bool binary = false,
+  }) async {
+    Future<http.Response> send(String token) async {
+      final headers = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': binary
+            ? 'application/octet-stream'
+            : 'application/json',
+      };
+      final uri = base.resolve('/api/v1$path');
+      return (body == null
+              ? client.get(uri, headers: headers)
+              : client.post(
+                  uri,
+                  headers: headers,
+                  body: binary ? body : jsonEncode(body),
+                ))
+          .timeout(const Duration(seconds: 45));
+    }
+
+    final token = _tokens?['accessToken'] as String?;
+    if (token == null) {
+      throw const AccessError('Inicia sesión nuevamente.', 401);
+    }
+    try {
+      var response = await send(token);
+      if (response.statusCode == 401) {
+        if (_tokens?['accessToken'] == token) await _renew();
+        final fresh = _tokens?['accessToken'] as String?;
+        if (fresh == null) {
+          throw const AccessError('Inicia sesión nuevamente.', 401);
+        }
+        response = await send(fresh);
+      }
+      if (response.statusCode >= 400) {
+        String title = 'No se pudo completar la solicitud.';
+        try {
+          title =
+              (jsonDecode(response.body) as Map)['title'] as String? ?? title;
+        } catch (_) {
+          /* Non-JSON gateway error. */
+        }
+        throw AccessError(title, response.statusCode);
+      }
+      return response;
+    } on TimeoutException {
+      throw const AccessError(
+        'La conexión tardó demasiado. Puedes reintentar.',
+      );
+    } on http.ClientException {
+      throw const AccessError('No pudimos conectarnos. Revisa tu conexión.');
+    }
+  }
+
+  Future<Map<String, dynamic>> garments(int page) async =>
+      Map<String, dynamic>.from(
+        jsonDecode((await authorizedRequest('/garments?page=$page')).body)
+            as Map,
+      );
+  Future<String> uploadPhoto(Uint8List bytes) async =>
+      (jsonDecode(
+            (await authorizedRequest(
+              '/garment-photos',
+              body: bytes,
+              binary: true,
+            )).body,
+          ) as Map)['id']
+          as String;
+  Future<Map<String, dynamic>> createGarment(Map<String, dynamic> data) async =>
+      Map<String, dynamic>.from(
+        jsonDecode((await authorizedRequest('/garments', body: data)).body)
+            as Map,
+      );
+  Future<Uint8List> garmentPhoto(String id) async =>
+      (await authorizedRequest('/garment-photos/$id')).bodyBytes;
 
   void dispose() => client.close();
 }

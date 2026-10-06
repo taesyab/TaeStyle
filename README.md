@@ -4,7 +4,7 @@ Aplicación móvil para aprovechar mejor la ropa, entender la inversión en el c
 
 ## Estado del proyecto
 
-Primer incremento en implementación: API .NET 10 de registro y sesiones, migración PostgreSQL y app Flutter con acceso y closet vacío. Piloto confirmado en Ecuador, con USD y Android primero. No hay despliegue público ni gestión de prendas todavía.
+API .NET 10 de registro y sesiones, migraciones PostgreSQL y app Flutter con acceso, alta de prendas con foto privada, listado y detalle. Piloto confirmado en Ecuador, con USD y Android primero. No hay despliegue público; edición, archivo, eliminación, usos y métricas siguen pendientes.
 
 ## Stack aprobado
 
@@ -30,6 +30,7 @@ Marketplace, comunidad, probador virtual, IA estilista, tiendas, clima, calendar
 - [Backlog de preparación](docs/project/backlog-inicial.md).
 - [Primer incremento y preparación del entorno](docs/project/primer-incremento.md).
 - [Contratos de autenticación](docs/api/autenticacion.md).
+- [Alta de prendas: contratos, almacenamiento y actualización](docs/project/alta-prendas.md).
 - [Ejecutar y verificar el primer incremento](docs/project/ejecucion-local.md).
 - [Guía de contribución](CONTRIBUTING.md).
 
@@ -42,10 +43,10 @@ Un solo repositorio contiene backend, móvil y documentación para mantener alin
 | docs/ | Arquitectura, decisiones y planificación | Preparado |
 | .github/ | Plantillas de tareas y pull requests | Preparado |
 | backend/ | Solución .NET, cuatro capas y pruebas | Implementación inicial |
-| mobile/tae_style/ | Proyecto Flutter | Acceso y closet vacío |
+| mobile/tae_style/ | Proyecto Flutter | Acceso, alta con foto, listado y detalle |
 | deploy/ | Docker, Compose y script PostgreSQL | Preparado para desarrollo |
 
-Los comandos de ejecución y requisitos están en la guía enlazada. La recuperación de contraseña, gestión de prendas e informes se implementarán en los siguientes incrementos; no se debe publicar esta base como un MVP completo.
+Los comandos de ejecución y requisitos están en las guías enlazadas. La recuperación de contraseña, las demás operaciones de prendas e informes se implementarán en los siguientes incrementos; no se debe publicar esta base como un MVP completo.
 
 ## Repositorio remoto
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../app/theme.dart';
 import '../data/access_api.dart';
+import '../../closet/presentation/closet_view.dart';
 
 class AccessScreen extends StatefulWidget {
   final AccessApi api;
@@ -373,24 +374,13 @@ class _AccessScreenState extends State<AccessScreen> {
                     ),
                   ),
                 ],
-                if (page == 'closet') ...[
-                  logo(),
-                  const SizedBox(height: 20),
-                  Text('Mi closet', style: heading),
-                  const SizedBox(height: 64),
-                  const Icon(Icons.checkroom_outlined, size: 72, color: plum),
-                  const SizedBox(height: 24),
-                  Text(
-                    'Un espacio para\nlo que ya tienes',
-                    style: heading,
-                    textAlign: TextAlign.center,
+                if (page == 'closet')
+                  ClosetView(
+                    api: widget.api,
+                    timeZone:
+                        profile?['timeZone'] as String? ?? 'America/Guayaquil',
+                    onSessionExpired: () => go('login'),
                   ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Todavía no has agregado prendas.',
-                    textAlign: TextAlign.center,
-                  ),
-                ],
                 if (page == 'account') ...[
                   logo(),
                   const SizedBox(height: 20),
